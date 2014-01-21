@@ -184,7 +184,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Mappings.resx</DependentUpon>
     </Compile>
-    <Compile Include="StandardClaimTypes.cs" />
     <Compile Include="StoredGrantRepository.cs" />
   </ItemGroup>
   <ItemGroup>

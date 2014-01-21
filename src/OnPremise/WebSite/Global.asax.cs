@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Data.Entity;
 using System.Security.Claims;
 using System.Web.Helpers;
 using System.Web.Http;
@@ -8,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Thinktecture.IdentityServer.Repositories;
-using Thinktecture.IdentityServer.Repositories.Sql;
+using Thinktecture.IdentityServer.Repositories.Mongo;
 
 namespace Thinktecture.IdentityServer.Web
 {
@@ -27,7 +26,7 @@ namespace Thinktecture.IdentityServer.Web
         protected void Application_Start()
         {
             // create empty config database if it not exists
-            Database.SetInitializer(new ConfigurationDatabaseInitializer());
+            ConfigurationDatabaseInitializer.SeedContext();
             
             // set the anti CSRF for name (that's a unqiue claim in our system)
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;

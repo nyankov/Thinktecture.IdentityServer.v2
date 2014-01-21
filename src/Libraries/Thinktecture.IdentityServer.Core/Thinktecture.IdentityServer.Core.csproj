@@ -159,6 +159,7 @@
     <Compile Include="Models\Configuration\WSTrustConfiguration.cs" />
     <Compile Include="Models\Configuration\WSFederationConfiguration.cs" />
     <Compile Include="Repositories\IUserManagementRepository.cs" />
+    <Compile Include="Repositories\StandardClaimTypes.cs" />
     <Compile Include="Resources\AbsoluteUriAttribute.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

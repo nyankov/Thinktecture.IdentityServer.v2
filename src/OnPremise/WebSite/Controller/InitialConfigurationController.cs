@@ -38,7 +38,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
 
         public ActionResult Index()
         {
-            if (ConfigurationRepository.Keys.SigningCertificate != null)
+            if (ConfigurationRepository.Keys!=null && ConfigurationRepository.Keys.SigningCertificate != null)
             {
                 return RedirectToAction("index", "home");
             }
@@ -57,7 +57,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(InitialConfigurationModel model)
         {
-            if (ConfigurationRepository.Keys.SigningCertificate != null)
+            if (ConfigurationRepository.Keys != null && ConfigurationRepository.Keys.SigningCertificate != null)
             {
                 return RedirectToAction("index", "home");
             }
