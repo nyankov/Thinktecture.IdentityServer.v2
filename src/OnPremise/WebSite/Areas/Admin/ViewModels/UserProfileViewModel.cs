@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
@@ -28,12 +29,22 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
             {
                 var propertyList = ProfileBase.Properties.Cast<SettingsProperty>().ToArray();
                 var profile = ProfileBase.Create(username);
-                var values =
-                    from property in propertyList
-                    where 
-                        (property.PropertyType.IsValueType && !property.PropertyType.IsGenericType) || 
-                        property.PropertyType == typeof(string)
-                    select new ProfilePropertyViewModel(property, Convert.ToString(profile[property.Name]));
+                var values = new List<ProfilePropertyViewModel>();
+                foreach (var property in propertyList.Where(property => (property.PropertyType.IsValueType && !property.PropertyType.IsGenericType) || 
+                                                                         property.PropertyType == typeof (string)))
+                {
+                    string v;
+                    try
+                    {
+                        v = Convert.ToString(profile[property.Name]);
+                    }
+                    catch
+                    {
+                        v = String.Empty;
+                    }
+                    var value = new ProfilePropertyViewModel(property, v);
+                    values.Add(value);
+                }
                 ProfileValues = values.ToArray();
             }
         }
@@ -60,7 +71,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
                     else
                     {
                         object val = Convert.ChangeType(ProfileValues[i].Data.Value, prop.PropertyType);
-                        profile.SetPropertyValue(prop.Name, val);
+                        profile.SetPropertyValue(prop.Name, val!=null ? val.ToString() : string.Empty);
                     }
                 }
                 catch (FormatException ex)
