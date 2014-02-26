@@ -3,7 +3,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration
 {
-    public class GlobalConfiguration : Entity<int>
+    public class GlobalConfiguration : Entity
     {
         public String SiteName { get; set; }
         

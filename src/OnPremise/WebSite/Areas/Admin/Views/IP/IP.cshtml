@@ -3,7 +3,7 @@
 @using Thinktecture.IdentityServer.Web.Utility
 
 @{
-    if (Model.ID == 0)
+    if (Model.ID.Equals("0"))
     {
         ViewBag.Title = IP_cshtml.NewIdentityProvider;
     }
@@ -13,7 +13,7 @@
     }
 }
 @{
-    var action = Model.ID == 0 ? "Create" : "Update";
+    var action = Model.ID.Equals("0") ? "Create" : "Update";
 }
 @using (Html.BeginForm(action, "IP", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -25,7 +25,7 @@
         @Html.EditorForModel()
 
         <div class="buttons">
-            @if (Model.ID > 0)
+            @if (!Model.ID.Equals("0"))
             {
                 <button type="submit" name="action" value="save">@IP_cshtml.SaveChanges</button>
                 <button type="submit" name="action" value="delete">@IP_cshtml.Delete</button>

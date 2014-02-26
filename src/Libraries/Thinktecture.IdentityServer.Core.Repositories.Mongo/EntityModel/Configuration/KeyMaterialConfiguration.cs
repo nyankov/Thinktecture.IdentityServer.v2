@@ -2,7 +2,7 @@
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration
 {
-    public class KeyMaterialConfiguration : Entity<int>
+    public class KeyMaterialConfiguration : Entity
     {
         public string SigningCertificateName { get; set; }
         public string DecryptionCertificateName { get; set; }

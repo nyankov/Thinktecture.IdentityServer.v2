@@ -6,8 +6,8 @@ using Thinktecture.IdentityServer.Repositories.Mongo.EntityModel;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    public class ClientsRepository : MongoRepository<Client, int>, IClientsRepository
-    {
+    public class ClientsRepository : MongoRepository<Client>, IClientsRepository
+   {
         public ClientsRepository()
             : base(Util<int>.GetDefaultConnectionString())
         {
@@ -56,11 +56,11 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
 
 
-        public override void Delete(int id)
+        public override void Delete(string id)
         {
             var item = this.SingleOrDefault(x => x.Id == id);
             if (item == null) return;
-            base.Delete(item);
+            base.Delete(item.Id);
         }
 
         public void Update(Models.Client model)
@@ -83,7 +83,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
 
 
-        public Models.Client Get(int id)
+        public Models.Client Get(string id)
         {
             var item = this.SingleOrDefault(x => x.Id == id);
             return item != null ? item.ToDomainModel() : null;

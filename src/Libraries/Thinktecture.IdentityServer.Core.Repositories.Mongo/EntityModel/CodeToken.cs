@@ -3,11 +3,11 @@ using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
 {
-    public class CodeToken : Entity<int>
+    public class CodeToken : Entity
     {
         public string Code { get; set; }
 
-        public int ClientId { get; set; }
+        public string ClientId { get; set; }
 
         public string UserName { get; set; }
 

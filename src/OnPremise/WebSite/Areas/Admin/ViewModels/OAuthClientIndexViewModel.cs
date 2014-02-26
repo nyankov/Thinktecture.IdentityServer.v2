@@ -22,7 +22,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
     public class OAuthClientIndexInputModel
     {
         public string Name { get; set; }
-        public int ID { get; set; }
+        public string ID { get; set; }
         public bool Delete { get; set; }
     }
 

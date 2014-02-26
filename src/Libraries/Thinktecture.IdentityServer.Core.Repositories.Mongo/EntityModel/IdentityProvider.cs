@@ -2,7 +2,7 @@
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
 {
-    public class IdentityProvider : Entity<int>
+    public class IdentityProvider : Entity
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
@@ -14,5 +14,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
         public string ClientSecret { get; set; }
         public int? OAuth2ProviderType { get; set; }
         public bool Enabled { get; set; }
+
+        public string IconUrl { get; set; }
+        public bool UseIconAsButton { get; set; }
     }
 }

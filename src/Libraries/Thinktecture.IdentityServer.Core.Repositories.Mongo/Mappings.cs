@@ -325,7 +325,9 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
                 Realm = new Uri(rpEntity.Realm),
                 ExtraData1 = rpEntity.ExtraData1,
                 ExtraData2 = rpEntity.ExtraData2,
-                ExtraData3 = rpEntity.ExtraData3
+                ExtraData3 = rpEntity.ExtraData3,
+                Description = rpEntity.Description,
+                ImageUrl = rpEntity.ImageUrl
             };
 
             if (!string.IsNullOrWhiteSpace(rpEntity.ReplyTo))
@@ -358,11 +360,13 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
                 ExtraData1 = relyingParty.ExtraData1,
                 ExtraData2 = relyingParty.ExtraData2,
                 ExtraData3 = relyingParty.ExtraData3,
+                Description = relyingParty.Description,
+                ImageUrl = relyingParty.ImageUrl
             };
 
             if (!string.IsNullOrEmpty(relyingParty.Id))
             {
-                rpEntity.Id = int.Parse(relyingParty.Id);
+                rpEntity.Id = relyingParty.Id;
             }
 
             if (relyingParty.ReplyTo != null)
@@ -392,7 +396,9 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
                      Id = rp.Id.ToString(CultureInfo.InvariantCulture),
                      Name = rp.Name,
                      Realm = new Uri(rp.Realm),
-                     Enabled = rp.Enabled
+                     Enabled = rp.Enabled,
+                     Description = rp.Description,
+                     ImageUrl = rp.ImageUrl
                  }).ToList();
         }
         #endregion
@@ -481,6 +487,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
                     ClientID = idp.ClientID,
                     ClientSecret = idp.ClientSecret,
                     ProviderType = (OAuth2ProviderTypes?)idp.OAuth2ProviderType,
+                    IconUrl = idp.IconUrl,
+                    UseIconAsButton = idp.UseIconAsButton
                 });
         }
 
@@ -504,6 +512,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
                 ClientID = idp.ClientID,
                 ClientSecret = idp.ClientSecret,
                 ProviderType = (OAuth2ProviderTypes?)idp.OAuth2ProviderType,
+                IconUrl = idp.IconUrl,
+                UseIconAsButton = idp.UseIconAsButton
             };
         }
 
@@ -526,7 +536,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
                 return;
             }
 
-            entity.Id = idp.ID;
+            if (!idp.ID.Equals("0"))
+                entity.Id = idp.ID;
             entity.Name = idp.Name;
             entity.Enabled = idp.Enabled;
             entity.ShowInHrdSelection = idp.ShowInHrdSelection;
@@ -537,6 +548,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
             entity.ClientID = idp.ClientID;
             entity.ClientSecret = idp.ClientSecret;
             entity.OAuth2ProviderType = (int?)idp.ProviderType;
+            entity.IconUrl = idp.IconUrl;
+            entity.UseIconAsButton = idp.UseIconAsButton;
         }
 
         #endregion

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Thinktecture.IdentityServer.Models;
 using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 using Thinktecture.IdentityServer.Repositories.Mongo.EntityModel;
 
+
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    public class RelyingPartyRepository : MongoRepository<RelyingParties, int>, IRelyingPartyRepository
+    public class RelyingPartyRepository : MongoRepository<RelyingParties>, IRelyingPartyRepository
     {
         public RelyingPartyRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -18,18 +19,15 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         public bool TryGet(string realm, out RelyingParty relyingParty)
         {
             relyingParty = null;
+            var regex = new Regex("^" + realm + "$", RegexOptions.IgnoreCase);
+            var match = this.Where(rp => regex.IsMatch(rp.Realm) && rp.Enabled)
+                .OrderByDescending(rp => rp.Realm)
+                .FirstOrDefault();
 
-                var match = this.Where(rp => rp.Realm.Equals(realm, StringComparison.OrdinalIgnoreCase) &&
-                                              rp.Enabled)
-                                .OrderByDescending(rp => rp.Realm)
-                                .FirstOrDefault();
+            if (match == null) return false;
+            relyingParty = match.ToDomainModel();
 
-                if (match != null)
-                {
-                    relyingParty = match.ToDomainModel();
-                    return true;
-                }
-            return false;
+            return true;
         }
 
         #region Management
@@ -52,9 +50,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
 
         public RelyingParty Get(string id)
         {
-            var uniqueId = int.Parse(id);
-
-            return this.First(rp => rp.Id == uniqueId).ToDomainModel();
+            return this.First(rp => rp.Id == id).ToDomainModel();
 
         }
 
@@ -69,12 +65,17 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
             Update(rpEntity);
         }
 
-        public void Delete(string id)
+        public override void Delete(string id)
         {
-            var rpEntity = new RelyingParties {Id = int.Parse(id)};
+            var rpEntity = new RelyingParties {Id = id};
             var rp = this.FirstOrDefault(r => r.Id == rpEntity.Id);
             if (rp == null) return;
-            Delete(rp);
+            base.Delete(rp.Id);
+        }
+
+        public RelyingParty GetByRealm(string realm)
+        {
+            return this.FirstOrDefault(rp => rp.Realm == realm).ToDomainModel();
         }
 
         #endregion

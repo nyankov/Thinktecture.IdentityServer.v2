@@ -69,14 +69,13 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
             {
                 try
                 {
-                    if (list != null)
+                    if (list == null) return RedirectToAction("Index");
+
+                    foreach (var item in list.Where(x => x.Delete))
                     {
-                        foreach (var item in list.Where(x => x.Delete))
-                        {
-                            this.identityProviderRepository.Delete(item.ID);
-                        }
-                        TempData["Message"] = Resources.IPController.IdentityProvidersDeleted;
+                        this.identityProviderRepository.Delete(item.ID);
                     }
+                    TempData["Message"] = Resources.IPController.IdentityProvidersDeleted;
                     return RedirectToAction("Index");
                 }
                 catch (ValidationException ex)
@@ -97,7 +96,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
             return View("IP", new IdentityProvider());
         }
 
-        public ActionResult IP(int id)
+        public ActionResult IP(string id)
         {
             var ip = this.identityProviderRepository.Get(id);
             if (ip == null) return HttpNotFound();
@@ -137,7 +136,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
             }
             
             // if we're here, then we should clear name so the view thinks it's new
-            model.ID = 0;
+            model.ID = "0";
             return View("IP", model);
         }
         

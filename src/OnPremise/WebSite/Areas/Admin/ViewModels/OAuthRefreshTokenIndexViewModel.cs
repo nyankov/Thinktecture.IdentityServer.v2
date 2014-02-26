@@ -27,9 +27,9 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
                 (from item in clients.ToArray()
                 select new SelectListItem
                 {
-                    Text = item.Name, Value=item.ID.ToString()
+                    Text = item.Name, Value=item.ID
                 }).ToList();
-            list.Insert(0, new SelectListItem { Text = "-none selected-", Value="" });
+            list.Insert(0, new SelectListItem { Text = @"-none selected-", Value="" });
             this.Clients = list;
 
             if (searchCriteria.HasValues || doSearch)
@@ -43,9 +43,9 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
         public IEnumerable<SelectListItem> Clients { get; set; }
         public IEnumerable<CodeToken> SearchResults { get; set; }
 
-        public string LookupClientId(int clientID)
+        public string LookupClientId(string clientID)
         {
-            return Clients.Where(x => x.Value == clientID.ToString()).Select(x => x.Text).SingleOrDefault();
+            return Clients.Where(x => x.Value == clientID).Select(x => x.Text).SingleOrDefault();
         }
     }
 
@@ -54,7 +54,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
         public string Username { get; set; }
         public string Scope { get; set; }
         [ScaffoldColumn(false)]
-        public int? ClientID { get; set; }
+        public string ClientID { get; set; }
         [ScaffoldColumn(false)]
         public bool HasValues
         {

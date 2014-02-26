@@ -6,13 +6,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Thinktecture.IdentityServer.Models;
 using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 using CodeToken = Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.CodeToken;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    public class CodeTokenRepository : MongoRepository<CodeToken, int>, ICodeTokenRepository
+    public class CodeTokenRepository : MongoRepository<CodeToken>, ICodeTokenRepository
     {
         public CodeTokenRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -20,7 +21,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
             
         }    
 
-        public string AddCode(CodeTokenType type, int clientId, string userName, string scope)
+        public string AddCode(CodeTokenType type, string clientId, string userName, string scope)
         {
             var code = Guid.NewGuid().ToString("N");
 
@@ -41,8 +42,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         public bool TryGetCode(string code, out Models.CodeToken token)
         {
             token = null;
-
-            var entity = this.FirstOrDefault(t => t.Code.Equals(code, StringComparison.OrdinalIgnoreCase));
+            var regex = new Regex("^" + code + "$", RegexOptions.IgnoreCase);
+            var entity = this.FirstOrDefault(t => regex.IsMatch(t.Code));
 
             if (entity == null) return false;
 
@@ -52,18 +53,19 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
 
         public void DeleteCode(string code)
         {
-            var item = this.FirstOrDefault(x => x.Code.Equals(code, StringComparison.OrdinalIgnoreCase));
+            var regex = new Regex("^" + code + "$", RegexOptions.IgnoreCase);
+            var item = this.FirstOrDefault(x => regex.IsMatch(x.Code));
             if (item == null) return;
             Delete(item);
         }
 
-        public IEnumerable<Models.CodeToken> Search(int? clientId, string username, string scope, CodeTokenType type)
+        public IEnumerable<Models.CodeToken> Search(string clientId, string username, string scope, CodeTokenType type)
         {
             var query = this.Where(t => t.Type == (int) type);
 
-            if (clientId != null)
+            if (!string.IsNullOrEmpty(clientId))
             {
-                query = query.Where(t => t.ClientId == clientId.Value);
+                query = query.Where(t => t.ClientId == clientId);
             }
 
             if (!String.IsNullOrWhiteSpace(username))

@@ -18,10 +18,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.ViewModels
 
         public bool IsNew
         {
-            get
-            {
-                return this.Client.ID == 0;
-            }
+            get { return string.IsNullOrEmpty(Client.ID); }
         }
 
         public bool IsOAuthRefreshTokenEnabled

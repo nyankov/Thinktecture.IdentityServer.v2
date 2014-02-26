@@ -5,7 +5,7 @@
         TKey Id { get; }
     }
 
-    public interface IEntity : IEntity<uint>
+    public interface IEntity : IEntity<string>
     {
         
     }

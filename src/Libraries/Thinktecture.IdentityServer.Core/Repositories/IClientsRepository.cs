@@ -12,8 +12,8 @@ namespace Thinktecture.IdentityServer.Repositories
 
         // management 
         IEnumerable<Client> GetAll();
-        Client Get(int id);
-        void Delete(int id);
+        Client Get(string id);
+        void Delete(string id);
         void Update(Client model);
         void Create(Client model);
     }

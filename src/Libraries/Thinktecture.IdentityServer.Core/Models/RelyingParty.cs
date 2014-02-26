@@ -21,6 +21,14 @@ namespace Thinktecture.IdentityServer.Models
         [Required]
         [Display(ResourceType = typeof (Resources.Models.RelyingParty), Name = "Name", Description = "NameDescription")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(ResourceType = typeof(Resources.Models.RelyingParty), Name = "Description", Description = "DescriptionDescription")]
+        public string Description { get; set; }
+
+        [Required]
+        [Display(ResourceType = typeof(Resources.Models.RelyingParty), Name = "ImageUrl", Description = "ImageUrlDescription")]
+        public string ImageUrl { get; set; }
         
         [Required]
         [Display(ResourceType = typeof (Resources.Models.RelyingParty), Name = "Realm", Description = "RealmDescription")]

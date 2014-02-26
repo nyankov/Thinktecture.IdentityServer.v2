@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI.WebControls;
 using Thinktecture.IdentityServer.Models;
 using Thinktecture.IdentityServer.Repositories;
 
@@ -102,6 +103,11 @@ namespace Thinktecture.IdentityServer.Tests
         }
 
         public void Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RelyingParty GetByRealm(string realm)
         {
             throw new NotImplementedException();
         }

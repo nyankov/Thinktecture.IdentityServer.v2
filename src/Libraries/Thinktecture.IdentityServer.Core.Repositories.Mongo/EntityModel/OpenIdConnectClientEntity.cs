@@ -4,7 +4,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
 {
-    public class OpenIdConnectClientEntity : Entity<int>
+    public class OpenIdConnectClientEntity : Entity
     {
         public OpenIdConnectClientEntity()
         {

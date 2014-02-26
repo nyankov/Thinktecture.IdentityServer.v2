@@ -3,7 +3,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
 {
-    public class StoredGrant : Entity<int>
+    public class StoredGrant : Entity
     {
         public string GrantId { get; set; }
         

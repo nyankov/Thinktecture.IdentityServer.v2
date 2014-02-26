@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Thinktecture.IdentityServer.Repositories;
 using Thinktecture.IdentityServer.Repositories.Mongo;
+using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 
 namespace Thinktecture.IdentityServer.Web
 {
@@ -25,6 +26,8 @@ namespace Thinktecture.IdentityServer.Web
 
         protected void Application_Start()
         {
+            MongoEntityRegistrator.RegisterEntity();
+
             // create empty config database if it not exists
             ConfigurationDatabaseInitializer.SeedContext();
             

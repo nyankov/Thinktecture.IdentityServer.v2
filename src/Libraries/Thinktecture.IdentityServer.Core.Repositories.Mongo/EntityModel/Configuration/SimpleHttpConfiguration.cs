@@ -2,7 +2,7 @@
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration
 {
-    public class SimpleHttpConfiguration : Entity<int>
+    public class SimpleHttpConfiguration : Entity
     {
         public bool Enabled { get; set; }
     }

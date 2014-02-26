@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Thinktecture.IdentityServer.Models;
 using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 using Thinktecture.IdentityServer.Repositories.Mongo.EntityModel;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    public class DelegationRepository : MongoRepository<Delegation, int>, IDelegationRepository
+    public class DelegationRepository : MongoRepository<Delegation>, IDelegationRepository
     {
         public DelegationRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -19,10 +19,9 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
 
         public bool IsDelegationAllowed(string userName, string realm)
         {
-            var record =
-                this.FirstOrDefault(entry => entry.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) &&
-                                             entry.Realm.Equals(realm, StringComparison.OrdinalIgnoreCase));
-
+            var regex = new Regex("^" + userName + "$", RegexOptions.IgnoreCase);
+            var regex1 = new Regex("^" + realm + "$", RegexOptions.IgnoreCase);
+            var record = this.FirstOrDefault(entry => regex.IsMatch(entry.UserName) && regex1.IsMatch(entry.Realm));
             return (record != null);
         }
 
@@ -49,7 +48,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
 
         public IEnumerable<DelegationSetting> GetDelegationSettingsForUser(string userName)
         {
-            var settings = this.Where(record => record.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            var regex = new Regex("^" + userName + "$", RegexOptions.IgnoreCase);
+            var settings = this.Where(record => regex.IsMatch(record.UserName));
 
             return settings.ToList().ToDomainModel();
         }
@@ -68,11 +68,10 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
 
         public void Delete(DelegationSetting setting)
         {
-            var record =
-                this.Single(
-                    entry => entry.UserName.Equals(setting.UserName, StringComparison.OrdinalIgnoreCase) &&
-                             entry.Realm.Equals(setting.Realm.AbsoluteUri, StringComparison.OrdinalIgnoreCase));
-
+            var regex = new Regex("^" + setting.UserName + "$", RegexOptions.IgnoreCase);
+            var regex1 = new Regex("^" + setting.Realm + "$", RegexOptions.IgnoreCase);
+            var record = this.FirstOrDefault(entry => regex.IsMatch(entry.UserName) && regex1.IsMatch(entry.Realm));
+            if (record == null) return;
             Delete(record);
         }
 

@@ -1056,6 +1056,9 @@
       <DependentUpon>Admin.less</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Scripts\Admin.js" />
+    <Content Include="Content\icons\facebook.png" />
+    <Content Include="Content\icons\google.png" />
+    <Content Include="Content\icons\twitter.png" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\error.png" />
     <Content Include="Content\images\help.png" />
@@ -1147,7 +1150,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Configuration\identityServices.config" />
-    <Content Include="Configuration\profile.config" />
+    <Content Include="Configuration\profile.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configuration\repositories.config">
       <SubType>Designer</SubType>
     </Content>

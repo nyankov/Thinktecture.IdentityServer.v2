@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Thinktecture.IdentityModel;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 using Thinktecture.IdentityServer.Repositories.Mongo.EntityModel;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    public class StoredGrantRepository : MongoRepository<StoredGrant, int>, IStoredGrantRepository
+    public class StoredGrantRepository : MongoRepository<StoredGrant>, IStoredGrantRepository
     {
         public StoredGrantRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -30,11 +26,12 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
             return result != null ? result.ToDomainModel() : null;
         }
 
-        public void Delete(string id)
+        public override void Delete(string id)
         {
-            var item = this.FirstOrDefault(x => x.GrantId.Equals(id, StringComparison.OrdinalIgnoreCase));
+            var regex = new Regex("^" + id + "$", RegexOptions.IgnoreCase);
+            var item = this.FirstOrDefault(x => regex.IsMatch(x.GrantId));
             if (item == null) return;
-            Delete(item);
+            base.Delete(item.Id);
         }
     }
 }

@@ -3,7 +3,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    internal class GlobalConfigurationRepository : MongoRepository<GlobalConfiguration, int>
+    internal class GlobalConfigurationRepository : MongoRepository<GlobalConfiguration>
     {
         public GlobalConfigurationRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -12,7 +12,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class DiagnosticsConfigurationRepository : MongoRepository<DiagnosticsConfiguration, int>
+    internal class DiagnosticsConfigurationRepository : MongoRepository<DiagnosticsConfiguration>
     {
         public DiagnosticsConfigurationRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -21,7 +21,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class KeyMaterialConfigurationRepository : MongoRepository<KeyMaterialConfiguration, int>
+    internal class KeyMaterialConfigurationRepository : MongoRepository<KeyMaterialConfiguration>
     {
         public KeyMaterialConfigurationRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -30,7 +30,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class WSFederationRepository : MongoRepository<WSFederationConfiguration, int>
+    internal class WSFederationRepository : MongoRepository<WSFederationConfiguration>
     {
         public WSFederationRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -39,7 +39,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class FederationMetadataRepository : MongoRepository<FederationMetadataConfiguration, int>
+    internal class FederationMetadataRepository : MongoRepository<FederationMetadataConfiguration>
     {
         public FederationMetadataRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -48,7 +48,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class WSTrustRepository : MongoRepository<WSTrustConfiguration, int>
+    internal class WSTrustRepository : MongoRepository<WSTrustConfiguration>
     {
         public WSTrustRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -57,7 +57,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class OAuth2Repository : MongoRepository<OAuth2Configuration, int>
+    internal class OAuth2Repository : MongoRepository<OAuth2Configuration>
     {
         public OAuth2Repository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -66,7 +66,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class SimpleHttpRepository : MongoRepository<SimpleHttpConfiguration, int>
+    internal class SimpleHttpRepository : MongoRepository<SimpleHttpConfiguration>
     {
         public SimpleHttpRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -75,7 +75,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class AdfsIntegrationRepository : MongoRepository<AdfsIntegrationConfiguration, int>
+    internal class AdfsIntegrationRepository : MongoRepository<AdfsIntegrationConfiguration>
     {
         public AdfsIntegrationRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -84,7 +84,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
     }
 
-    internal class OpenIdConnectRepository : MongoRepository<OpenIdConnectConfiguration, int>
+    internal class OpenIdConnectRepository : MongoRepository<OpenIdConnectConfiguration>
     {
         public OpenIdConnectRepository()
             : base(Util<int>.GetDefaultConnectionString())

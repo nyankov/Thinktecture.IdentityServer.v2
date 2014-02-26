@@ -2,7 +2,7 @@
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration
 {
-    public class OAuth2Configuration : Entity<int>
+    public class OAuth2Configuration : Entity
     {
         public bool Enabled { get; set; }
 

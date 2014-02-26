@@ -6,7 +6,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.EntityModel;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    public class IdentityProviderRepository : MongoRepository<IdentityProvider, int>,IIdentityProviderRepository
+    public class IdentityProviderRepository : MongoRepository<IdentityProvider>, IIdentityProviderRepository
     {
         public IdentityProviderRepository()
             : base(Util<int>.GetDefaultConnectionString())
@@ -39,11 +39,11 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
             if (othersWithSameName.Any()) throw new ValidationException(string.Format(Resources.IdentityProviderRepository.NameAlreadyInUseError, item.Name));
         }
 
-        public override void Delete(int id)
+        public override void Delete(string id)
         {
             var item = this.FirstOrDefault(idp => idp.Id == id);
             if (item == null) return;
-            Delete(item);
+            base.Delete(item.Id);
         }
 
         public void Update(Models.IdentityProvider item)
@@ -57,7 +57,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo
         }
 
 
-        public Models.IdentityProvider Get(int id)
+        public Models.IdentityProvider Get(string id)
         {
             var item = this.SingleOrDefault(x => x.Id == id);
             return item != null ? item.ToDomainModel() : null;

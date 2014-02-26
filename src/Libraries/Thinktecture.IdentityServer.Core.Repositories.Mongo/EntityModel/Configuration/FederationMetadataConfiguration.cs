@@ -2,7 +2,7 @@
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration
 {
-    public class FederationMetadataConfiguration : Entity<int>
+    public class FederationMetadataConfiguration : Entity
     {
         public bool Enabled { get; set; }
     }

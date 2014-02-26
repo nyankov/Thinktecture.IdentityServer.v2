@@ -3,7 +3,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
 {
-    public class RelyingParties : Entity<int>
+    public class RelyingParties : Entity
     {
         public string Name { get; set; }
         public bool Enabled { get; set; }
@@ -20,5 +20,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
         public string ExtraData1 { get; set; }
         public string ExtraData2 { get; set; }
         public string ExtraData3 { get; set; }
+
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

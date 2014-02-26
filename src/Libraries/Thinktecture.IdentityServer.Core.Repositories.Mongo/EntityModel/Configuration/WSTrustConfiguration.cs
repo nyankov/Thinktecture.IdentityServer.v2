@@ -3,7 +3,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.Data;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration
 {
-    public class WSTrustConfiguration : Entity<int>
+    public class WSTrustConfiguration : Entity
     {
         public bool Enabled { get; set; }
 

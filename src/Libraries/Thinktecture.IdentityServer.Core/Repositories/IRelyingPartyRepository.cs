@@ -15,6 +15,7 @@ namespace Thinktecture.IdentityServer.Repositories
         // management
         bool SupportsWriteAccess { get; }
         IEnumerable<RelyingParty> List(int pageIndex, int pageSize);
+        RelyingParty GetByRealm(string realm);
         RelyingParty Get(string id);
         void Add(RelyingParty relyingParty);
         void Update(RelyingParty relyingParty);

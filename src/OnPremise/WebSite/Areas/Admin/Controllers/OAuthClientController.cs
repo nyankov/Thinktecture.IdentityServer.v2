@@ -14,7 +14,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
     public class OAuthClientController : Controller
     {
         [Import]
-        public IClientsRepository clientRepository { get; set; }
+        public IClientsRepository ClientRepository { get; set; }
 
         public OAuthClientController()
         {
@@ -22,12 +22,12 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
         }
         public OAuthClientController(IClientsRepository clientRepository)
         {
-            this.clientRepository = clientRepository;
+            ClientRepository = clientRepository;
         }
 
         public ActionResult Index()
         {
-            var vm = new OAuthClientIndexViewModel(this.clientRepository);
+            var vm = new OAuthClientIndexViewModel(ClientRepository);
             return View("Index", vm);
         }
 
@@ -50,7 +50,7 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
                 {
                     foreach (var client in list.Where(x => x.Delete))
                     {
-                        this.clientRepository.Delete(client.ID);
+                        ClientRepository.Delete(client.ID);
                     }
                     TempData["Message"] = Resources.OAuthClientController.ClientsDeleted;
                     return RedirectToAction("Index");
@@ -68,12 +68,12 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
             return Index();
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
-            Client client = null;
-            if (id != null && id > 0)
+            Client client;
+            if (!String.IsNullOrEmpty(id))
             {
-                client = this.clientRepository.Get(id.Value);
+                client = ClientRepository.Get(id);
                 if (client == null) return HttpNotFound();
             }
             else
@@ -89,22 +89,21 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Client client)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return Edit(client.ID);
+
+            try
             {
-                try
-                {
-                    this.clientRepository.Create(client);
-                    TempData["Message"] = Resources.OAuthClientController.ClientCreated;
-                    return RedirectToAction("Edit", new { id = client.ID });
-                }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("", Resources.OAuthClientController.ErrorCreatingClient);
-                }
+                ClientRepository.Create(client);
+                TempData["Message"] = Resources.OAuthClientController.ClientCreated;
+                return RedirectToAction("Edit", new { id = client.ID });
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", Resources.OAuthClientController.ErrorCreatingClient);
             }
 
             return Edit(client.ID);
@@ -114,22 +113,21 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Update(Client client)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return Edit(client.ID);
+
+            try
             {
-                try
-                {
-                    this.clientRepository.Update(client);
-                    TempData["Message"] = Resources.OAuthClientController.ClientUpdated;
-                    return RedirectToAction("Edit", new { id = client.ID });
-                }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("", Resources.OAuthClientController.ErrorUpdatingClient);
-                }
+                ClientRepository.Update(client);
+                TempData["Message"] = Resources.OAuthClientController.ClientUpdated;
+                return RedirectToAction("Edit", new { id = client.ID });
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", Resources.OAuthClientController.ErrorUpdatingClient);
             }
 
             return Edit(client.ID);
@@ -137,24 +135,23 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return Edit(id);
+
+            try
             {
-                try
-                {
-                    this.clientRepository.Delete(id);
-                    TempData["Message"] = Resources.OAuthClientController.ClientDeleted;
-                    return RedirectToAction("Index");
-                }
-                catch (ValidationException ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("", Resources.OAuthClientController.ErrorDeletingClient);
-                }
+                ClientRepository.Delete(id);
+                TempData["Message"] = Resources.OAuthClientController.ClientDeleted;
+                return RedirectToAction("Index");
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", Resources.OAuthClientController.ErrorDeletingClient);
             }
 
             return Edit(id);
@@ -163,23 +160,22 @@ namespace Thinktecture.IdentityServer.Web.Areas.Admin.Controllers
         [ChildActionOnly]
         public ActionResult Menu()
         {
-            var list = new OAuthClientIndexViewModel(this.clientRepository);
-            if (list.Clients.Any())
+            var list = new OAuthClientIndexViewModel(ClientRepository);
+            
+            if (!list.Clients.Any()) return new EmptyResult();
+
+            var vm = new ChildMenuViewModel
             {
-                var vm = new ChildMenuViewModel
-                {
-                    Items = list.Clients.Select(x =>
-                        new ChildMenuItem
-                        {
-                            Controller = "OAuthClient",
-                            Action = "Edit",
-                            Title = x.Name,
-                            RouteValues = new { id = x.ID }
-                        }).ToArray()
-                };
-                return PartialView("ChildMenu", vm);
-            }
-            return new EmptyResult();
+                Items = list.Clients.Select(x =>
+                    new ChildMenuItem
+                    {
+                        Controller = "OAuthClient",
+                        Action = "Edit",
+                        Title = x.Name,
+                        RouteValues = new { id = x.ID }
+                    }).ToArray()
+            };
+            return PartialView("ChildMenu", vm);
         }
 
 

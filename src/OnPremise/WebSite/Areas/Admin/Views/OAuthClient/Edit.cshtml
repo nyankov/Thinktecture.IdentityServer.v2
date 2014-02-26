@@ -36,7 +36,7 @@
             <button type="reset">@Edit_cshtml.Cancel</button>
         </div>
 
-        @if (Model.IsOAuthRefreshTokenEnabled)
+        @if (Model.IsOAuthRefreshTokenEnabled && !Model.IsNew)
         {
             <nav class="links">
                 <ul>

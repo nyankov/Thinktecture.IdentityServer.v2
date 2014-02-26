@@ -74,8 +74,8 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo.Data
 
         public virtual void Delete(TKey id)
         {
-            Collection.Remove(typeof (T).IsSubclassOf(typeof (Entity<>))
-                ? Query.EQ("_id", new ObjectId(id as string))
+            Collection.Remove(typeof (T).IsSubclassOf(typeof (Entity))
+                ? Query.EQ("_id", id.ToString())
                 : Query.EQ("_id", BsonValue.Create(id)));
         }
 

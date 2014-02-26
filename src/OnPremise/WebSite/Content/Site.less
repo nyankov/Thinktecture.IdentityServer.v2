@@ -116,13 +116,36 @@ a {
 
 
 ul.hrd {
+    zoom: 1;
+
+    &:before,
+    &:after{
+        content: "";
+        display: table;
+    }
+
+    &:after{
+        clear: both;
+    }
+    
     li {
         list-style: none;
+        float:left;
+        
+        
 
         button {
-            width: 300px;
-            height: 30px;
+            width: 150px;
+            height: 35px;
             margin: 3px;
+            img{
+                float: left;
+                margin-left: 5px;
+            }
+            span{
+                display:inline-block;
+                line-height: 35px;
+            }
         }
     }
 }

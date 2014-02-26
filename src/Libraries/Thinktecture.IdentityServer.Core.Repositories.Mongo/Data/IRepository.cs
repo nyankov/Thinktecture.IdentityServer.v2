@@ -19,7 +19,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo.Data
         bool Exists(Expression<Func<T, bool>> predicate);
     }
 
-    public interface IRepository<T> : IRepository<T, uint>
+    public interface IRepository<T> : IRepository<T, string>
         where T : IEntity
     {
         

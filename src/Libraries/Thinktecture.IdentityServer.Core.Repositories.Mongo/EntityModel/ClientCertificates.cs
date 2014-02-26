@@ -2,7 +2,7 @@
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel
 {
-    public class ClientCertificates : Entity<int>
+    public class ClientCertificates : Entity
     {
         public string UserName { get; set; }
         

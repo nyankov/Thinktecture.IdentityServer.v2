@@ -40,6 +40,9 @@ namespace Thinktecture.IdentityServer.Protocols.WSFederation
         [Import]
         public IIdentityProviderRepository IdentityProviderRepository { get; set; }
 
+        [Import]
+        public IRelyingPartyRepository RelyingPartyRepository { get; set; }
+
 
         public HrdController()
         {
@@ -423,6 +426,11 @@ namespace Thinktecture.IdentityServer.Protocols.WSFederation
                 x => x.Enabled && x.ShowInHrdSelection);
         }
 
+        RelyingParty GetRelyingParty(string realm)
+        {
+            return RelyingPartyRepository.GetByRealm(realm);
+        }
+
         private ClaimsPrincipal ValidateToken(SecurityToken token)
         {
             var config = new SecurityTokenHandlerConfiguration();
@@ -464,7 +472,8 @@ namespace Thinktecture.IdentityServer.Protocols.WSFederation
             else
             {
                 Tracing.Verbose("HRD selection screen displayed.");
-                var vm = new HrdViewModel(message, idps);
+                var rp = GetRelyingParty(message.Realm);
+                var vm = new HrdViewModel(message, idps, rp);
                 return View("HRD", vm);
             }
         }
@@ -620,7 +629,7 @@ namespace Thinktecture.IdentityServer.Protocols.WSFederation
 
         internal class OAuth2Context : Context
         {
-            public int IdP { get; set; }
+            public string IdP { get; set; }
         }
 
         #endregion

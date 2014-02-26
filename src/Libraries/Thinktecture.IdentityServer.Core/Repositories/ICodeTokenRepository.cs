@@ -13,9 +13,9 @@ namespace Thinktecture.IdentityServer.Repositories
     /// </summary>
     public interface ICodeTokenRepository
     {
-        string AddCode(CodeTokenType type, int clientId, string userName, string scope);
+        string AddCode(CodeTokenType type, string clientId, string userName, string scope);
         bool TryGetCode(string tokenIdentifier, out CodeToken token);
         void DeleteCode(string tokenIdentifier);
-        IEnumerable<CodeToken> Search(int? clientId, string username, string scope, CodeTokenType type);
+        IEnumerable<CodeToken> Search(string clientId, string username, string scope, CodeTokenType type);
     }
 }

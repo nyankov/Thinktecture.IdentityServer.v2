@@ -2,7 +2,7 @@
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo.EntityModel.Configuration
 {
-    public class AdfsIntegrationConfiguration:Entity<int>
+    public class AdfsIntegrationConfiguration:Entity
     {
         public bool Enabled { get; set; }
 

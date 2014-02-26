@@ -11,8 +11,13 @@ namespace Thinktecture.IdentityServer.Models
 {
     public class IdentityProvider : IValidatableObject
     {
+        private string _id = "0";
         [UIHint("HiddenInput")]
-        public int ID { get; set; }
+        public string ID
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         [Required]
         [Display(Order = 1, ResourceType = typeof (Resources.Models.IdentityProvider), Name = "Name", Description = "NameDescription")]
@@ -36,8 +41,10 @@ namespace Thinktecture.IdentityServer.Models
         [Display(Order = 6, ResourceType = typeof (Resources.Models.IdentityProvider), Name = "WSFederationEndpoint", Description = "WSFederationEndpointDescription")]
         [AbsoluteUri]
         public string WSFederationEndpoint { get; set; }
-
+        
         string _IssuerThumbprint;
+        
+
         [UIHint("Thumbprint")]
         [Display(Order = 7, ResourceType = typeof (Resources.Models.IdentityProvider), Name = "IssuerThumbprint", Description = "IssuerThumbprintDescription")]
         public string IssuerThumbprint
@@ -62,6 +69,12 @@ namespace Thinktecture.IdentityServer.Models
 
         [Display(Order = 10, ResourceType = typeof (Resources.Models.IdentityProvider), Name = "ClientSecret", Description = "ClientSecretDescription")]
         public string ClientSecret { get; set; }
+
+        [Display(Order = 11, ResourceType = typeof(Resources.Models.IdentityProvider), Name = "ProviderIcon", Description = "ProviderIconDescription")]
+        public string IconUrl { get; set; }
+
+        [Display(Order = 12, ResourceType = typeof(Resources.Models.IdentityProvider), Name = "ProviderIconAsButton", Description = "ProviderIconAsButtonDescription")]
+        public bool UseIconAsButton { get; set; }
 
         public System.Collections.Generic.IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

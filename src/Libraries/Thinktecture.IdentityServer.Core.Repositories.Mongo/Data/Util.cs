@@ -83,7 +83,7 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo.Data
             }
             else
             {
-                while (entitytype.BaseType != null && !(entitytype.BaseType == typeof(Entity<int>)))
+                while (entitytype.BaseType != null && !(entitytype.BaseType == typeof(Entity)))
                 {
                     entitytype = entitytype.BaseType;
                 }

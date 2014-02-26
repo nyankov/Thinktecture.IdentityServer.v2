@@ -6,7 +6,7 @@ using Thinktecture.IdentityServer.Repositories.Mongo.EntityModel;
 
 namespace Thinktecture.IdentityServer.Repositories.Mongo
 {
-    public class OpenIdConnectClientsRepository : MongoRepository<OpenIdConnectClientEntity, int>, IOpenIdConnectClientsRepository
+    public class OpenIdConnectClientsRepository : MongoRepository<OpenIdConnectClientEntity>, IOpenIdConnectClientsRepository
     {
         public OpenIdConnectClientsRepository()
             : base(Util<int>.GetDefaultConnectionString())

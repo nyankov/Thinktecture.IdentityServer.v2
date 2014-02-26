@@ -42,4 +42,10 @@ namespace Thinktecture.IdentityServer.Repositories.Mongo.Data
             return Id.GetHashCode();
         }
     }
+
+
+    public abstract class Entity : Entity<string>
+    {
+
+    }
 }

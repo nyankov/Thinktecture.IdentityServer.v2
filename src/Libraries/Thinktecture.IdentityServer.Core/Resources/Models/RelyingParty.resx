@@ -189,4 +189,16 @@
   <data name="TokenTypeDescription" xml:space="preserve">
     <value>Token type to issue for this replying party.</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionDescription" xml:space="preserve">
+    <value>Relying party description. Will be displayed in the hrd and wsfed endpoints</value>
+  </data>
+  <data name="ImageUrl" xml:space="preserve">
+    <value>Image url</value>
+  </data>
+  <data name="ImageUrlDescription" xml:space="preserve">
+    <value>Url to image that will be displayed for the relying party</value>
+  </data>
 </root>
